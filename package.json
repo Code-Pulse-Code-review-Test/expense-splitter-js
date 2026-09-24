@@ -1,0 +1,10 @@
+{
+  "name": "expense-splitter-js",
+  "version": "0.3.0",
+  "description": "Split shared expenses between friends",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  }
+}
