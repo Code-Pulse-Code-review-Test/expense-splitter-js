@@ -15,3 +15,7 @@ console.log('\nPayments to settle up:');
 for (const p of settleUp(trip)) {
   console.log(p.from + ' pays ' + p.to + ' ' + formatMoney(p.amount, 'LKR'));
 }
+
+const { exportReport } = require('./export');
+const file = process.argv[2] || 'trip.csv';
+console.log('Saved ' + exportReport(trip, file, 'csv', true, process.argv.includes('--open')));
