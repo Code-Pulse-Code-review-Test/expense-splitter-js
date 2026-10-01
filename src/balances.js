@@ -20,7 +20,6 @@ function settleUp(group) {
   const balances = getBalances(group);
   const debtors = [];
   const creditors = [];
-  let count = 0;
 
   for (const [name, value] of balances) {
     const amount = Math.round(value * 100) / 100;

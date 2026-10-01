@@ -37,8 +37,7 @@ function parseExpenses(group, text) {
   return added;
 }
 
-function parseMembers(group, text) {
-  const names = text.split('\n');
+function addMembers(group, names) {
   let added = 0;
   let skipped = 0;
 
@@ -60,27 +59,12 @@ function parseMembers(group, text) {
   return added;
 }
 
+function parseMembers(group, text) {
+  return addMembers(group, text.split('\n'));
+}
+
 function parseMembersCsv(group, text) {
-  const names = text.split('\n').map((line) => line.split(',')[0]);
-  let added = 0;
-  let skipped = 0;
-
-  for (const raw of names) {
-    const name = raw.trim();
-    if (name === '') {
-      continue;
-    }
-    if (group.members.includes(name)) {
-      console.log('Already in group: ' + name);
-      skipped++;
-      continue;
-    }
-    group.addMember(name);
-    added++;
-  }
-
-  console.log('Added ' + added + ' members, skipped ' + skipped);
-  return added;
+  return addMembers(group, text.split('\n').map((line) => line.split(',')[0]));
 }
 
 function toCsv(group) {

@@ -1,29 +1,22 @@
 const { getBalances } = require('./balances');
 
+const CURRENCIES = {
+  LKR: { prefix: 'Rs. ' },
+  USD: { prefix: '$' },
+  EUR: { suffix: ' EUR' },
+  GBP: { prefix: 'GBP ' },
+  INR: { prefix: 'Rs ' },
+  JPY: { suffix: ' JPY', decimals: 0 },
+  AUD: { prefix: 'A$' },
+  CAD: { prefix: 'C$' },
+  SGD: { prefix: 'S$' },
+  NZD: { prefix: 'NZ$' },
+};
+
 function formatMoney(amount, currency) {
-  if (currency == 'LKR') {
-    return 'Rs. ' + amount.toFixed(2);
-  } else if (currency == 'USD') {
-    return '$' + amount.toFixed(2);
-  } else if (currency == 'EUR') {
-    return amount.toFixed(2) + ' EUR';
-  } else if (currency == 'GBP') {
-    return 'GBP ' + amount.toFixed(2);
-  } else if (currency == 'INR') {
-    return 'Rs ' + amount.toFixed(2);
-  } else if (currency == 'JPY') {
-    return amount.toFixed(0) + ' JPY';
-  } else if (currency == 'AUD') {
-    return 'A$' + amount.toFixed(2);
-  } else if (currency == 'CAD') {
-    return 'C$' + amount.toFixed(2);
-  } else if (currency == 'SGD') {
-    return 'S$' + amount.toFixed(2);
-  } else if (currency == 'NZD') {
-    return 'NZ$' + amount.toFixed(2);
-  } else {
-    return amount.toFixed(2);
-  }
+  const c = CURRENCIES[currency] || {};
+  const decimals = c.decimals === undefined ? 2 : c.decimals;
+  return (c.prefix || '') + amount.toFixed(decimals) + (c.suffix || '');
 }
 
 // TODO: let the user pick the currency
@@ -46,7 +39,6 @@ function printBalances(group) {
 
 function printExpenses(group) {
   const currency = 'LKR';
-  let lineCount = 0;
   console.log('Expenses for ' + group.name);
   console.log('----------------------------');
   for (const e of group.expenses) {
